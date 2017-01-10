@@ -25,7 +25,9 @@ describe('Node Server Request Listener Function', function() {
 
   it('Should send back parsable stringified JSON', function() {
     var req = new stubs.request('/classes/messages', 'GET');
+    
     var res = new stubs.response();
+    
 
     handler.requestHandler(req, res);
 
@@ -61,7 +63,7 @@ describe('Node Server Request Listener Function', function() {
       username: 'Jono',
       message: 'Do my bidding!'
     };
-    var req = new stubs.request('/classes/messages', 'POST', stubMsg);
+    var req = new stubs.request('/classes/room', 'POST', stubMsg);
     var res = new stubs.response();
 
     handler.requestHandler(req, res);
@@ -82,9 +84,7 @@ describe('Node Server Request Listener Function', function() {
     };
     var req = new stubs.request('/classes/messages', 'POST', stubMsg);
     var res = new stubs.response();
-
     handler.requestHandler(req, res);
-
     expect(res._responseCode).to.equal(201);
 
       // Now if we request the log for that room the message we posted should be there:
@@ -92,7 +92,6 @@ describe('Node Server Request Listener Function', function() {
     res = new stubs.response();
 
     handler.requestHandler(req, res);
-
     expect(res._responseCode).to.equal(200);
     var messages = JSON.parse(res._data).results;
     expect(messages.length).to.be.above(0);
